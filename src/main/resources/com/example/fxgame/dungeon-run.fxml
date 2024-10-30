@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.fxgame.DungeonRun"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <Label text="Dungeon Map" />
+
+    <GridPane fx:id="dungeonGrid" hgap="5" vgap="5" alignment="CENTER">
+        <!-- Cells will be added dynamically from the controller -->
+    </GridPane>
+    <Label alignment="CENTER" fx:id="width"></Label>
+    <Label alignment="CENTER" fx:id="height"></Label>
+
+</VBox>
