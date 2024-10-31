@@ -1,5 +1,6 @@
 package com.example.fxgame;
 
+import areas.Location;
 import characters.Hero;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -57,6 +58,19 @@ public class RPGApplication extends Application {
         stage.show();
     }
 
+    public void enterRoom(Location location, Hero hero) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("dungeon-room.fxml"));
+        Parent dungeonRoom = loader.load();
+        DungeonRoom controller = loader.getController();
+        controller.setApp(this);
+        controller.setHero(hero);
+        controller.setLocation(location);
+
+        Scene dungeonRoomScene = new Scene(dungeonRoom, v, v1);
+        stage.setScene(dungeonRoomScene);
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch();
     }
@@ -68,4 +82,6 @@ public class RPGApplication extends Application {
     public void setHero(Hero hero) {
         this.hero = hero;
     }
+
+
 }

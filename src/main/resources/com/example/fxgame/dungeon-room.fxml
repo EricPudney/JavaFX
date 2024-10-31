@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Button?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.fxgame.DungeonRoom"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <HBox>
+
+    </HBox>
+    <ImageView fx:id="image">
+
+    </ImageView>
+    <HBox>
+        <Button text="N"/>
+        <Button text="E"/>
+        <Button text="W"/>
+        <Button text="S"/>
+        <Button text="Inventory"/>
+    </HBox>
+
+
+</VBox>

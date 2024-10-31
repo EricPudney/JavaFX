@@ -5,7 +5,9 @@ import static areas.Dungeon.rng;
 public class Location {
     //public Minion enemy;
     //public Inventory items;
+    private String imagePath;
     String description;
+    public boolean isStart;
     public boolean explored;
     public boolean noWaySouth;
     public boolean noWayNorth;
@@ -25,6 +27,7 @@ public class Location {
     public Location(boolean noWaySouth, boolean noWayNorth, boolean noWayEast, boolean noWayWest) {
         //this.items = new Inventory();
         this.explored = false;
+        this.imagePath = "/images/rooms/room3.png";
 
         double prob = rng.nextDouble();
         if (prob < 0.12) {
@@ -67,4 +70,8 @@ public class Location {
 //        }
 //        return description + text;
 //    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
 }

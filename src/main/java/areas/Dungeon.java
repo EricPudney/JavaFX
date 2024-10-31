@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Dungeon {
     private final Location[][] locations;
-    private final int width;
     private final int height;
+    private final int width;
     protected static Random rng = new Random();
 
     
@@ -22,11 +22,16 @@ public class Dungeon {
                 locations[i][j] = new Location(noWaySouth, noWayNorth, noWayEast, noWayWest);
             }
         }
+        locations[height - 1][width/2].isStart = true;
 
         // places the treasure somewhere in the dungeon
         int x = rng.nextInt(this.width);
         int y = rng.nextInt(this.height - 1);
         //locations[y][x].items.add(Item.generateTreasure(width, height));
+    }
+
+    public Location[][] getLocations(){
+        return locations;
     }
 
     public Location getLocation(int row, int col) {

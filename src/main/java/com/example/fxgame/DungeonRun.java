@@ -10,13 +10,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
 public class DungeonRun {
     private RPGApplication app;
 
-    Hero hero;
+    private Hero hero;
 
     public void setApp(RPGApplication app) {
         this.app = app;
@@ -42,42 +43,47 @@ public class DungeonRun {
     }
 
     private void populateDungeonGrid() {
-        int rows = dungeon.getWidth();
-        int cols = dungeon.getHeight();
+        int rows = dungeon.getHeight();
+        int cols = dungeon.getWidth();
 
-        for (int col = 0; col < cols; col++) {
-            for (int row = 0; row < rows; row++) {
-                // Create a Pane or Button for each dungeon cell
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
                 Button cell = new Button();
-                cell.setPrefSize(50, 50);
+                cell.setPrefSize(65, 65);
 
-                // Add some style to differentiate different rooms
-                cell.setStyle("-fx-background-color: lightgray;");
+                Location location = dungeon.getLocation(row, col);
+                if (location.explored) {
+                    cell.setStyle("-fx-background-color: darkgray;");
+                }
+                else {
+                    cell.setStyle("-fx-background-color: lightgray;");
+                }
 
-                // Add image based on Location type (e.g., player, enemy, treasure)
-                Location location = dungeon.getLocation(col, row);
                 ImageView imageView = getImageForLocation(location);
 
                 if (imageView != null) {
-                    cell.setGraphic(imageView); // Set the image in the button
+                    cell.setGraphic(imageView);
                 }
 
-                // Set an action to handle interactions with the cell
-                int finalRow = row;
-                int finalCol = col;
-                cell.setOnAction(e -> handleCellClick(finalCol, finalRow));
+                cell.setOnAction(e -> {
+                    try {
+                        handleCellClick(location);
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                });
 
-                // Add the cell to the grid at the correct row/column position
                 dungeonGrid.add(cell, col, row);
             }
-            width.setText("width: " + rows);
-            height.setText("height: " + cols);
         }
+        width.setText("width: " + cols);
+        height.setText("height: " + rows);
     }
+
 
     private ImageView getImageForLocation(Location location) {
         ImageView image = null;
-        if (hero.currentLocation == location) {
+        if (location.isStart) {
             Image entranceImage = loadImage("/images/entrance.png");
             if (entranceImage != null) {
                 image = new ImageView(entranceImage);
@@ -98,13 +104,14 @@ public class DungeonRun {
 
 
     // Handle a cell click and show information about the location
-    private void handleCellClick(int row, int col) {
-        Location location = dungeon.getLocation(row, col);
+    private void handleCellClick(Location location) throws IOException {
+        if (location.isStart) {
+            app.enterRoom(location, hero);
+        }
     }
 
     public void setHero(Hero hero) {
         this.hero = hero;
-        hero.currentLocation = dungeon.getLocation(Math.round((float) dungeon.getWidth() /2) - 1, 0);
         populateDungeonGrid();
     }
 }
