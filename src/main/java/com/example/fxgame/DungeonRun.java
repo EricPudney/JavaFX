@@ -23,6 +23,10 @@ public class DungeonRun {
         this.app = app;
     }
 
+    private Dungeon dungeon;
+
+    static Random rng = new Random();
+
     @FXML
     private GridPane dungeonGrid;
 
@@ -32,9 +36,6 @@ public class DungeonRun {
     @FXML
     Label height;
 
-    private Dungeon dungeon;
-
-    static Random rng = new Random();
 
     public void initialize() {
         int height = 3 + rng.nextInt(1, 3);
@@ -102,10 +103,9 @@ public class DungeonRun {
         }
     }
 
-
-    // Handle a cell click and show information about the location
     private void handleCellClick(Location location) throws IOException {
         if (location.isStart) {
+            app.setDungeon(dungeon);
             app.enterRoom(location, hero);
         }
     }

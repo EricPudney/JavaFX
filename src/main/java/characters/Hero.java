@@ -1,7 +1,6 @@
 package characters;
 
-import java.util.Scanner;
-
+import items.Inventory;
 
 public class Hero extends Character {
     public double evasion;
@@ -12,10 +11,8 @@ public class Hero extends Character {
     private int xp = 0;
     public int level = 1;
     public boolean foundTreasure = false;
-    //public Inventory inventory;
+    public Inventory inventory;
     //private final ArrayList<Equippable> equippedItems;
-
-    public static Scanner scanner = new Scanner(System.in);
 
     public Hero(int attack, int health, int shield, double initiative, double dodge, double block, double evasion, Type type, Race race, String name) {
         this.attack = attack;

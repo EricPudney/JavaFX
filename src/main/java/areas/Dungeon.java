@@ -1,5 +1,7 @@
 package areas;
 
+import items.Item;
+
 import java.util.Random;
 
 public class Dungeon {
@@ -27,7 +29,7 @@ public class Dungeon {
         // places the treasure somewhere in the dungeon
         int x = rng.nextInt(this.width);
         int y = rng.nextInt(this.height - 1);
-        //locations[y][x].items.add(Item.generateTreasure(width, height));
+        locations[y][x].items.add(Item.generateTreasure(width, height));
     }
 
     public Location[][] getLocations(){

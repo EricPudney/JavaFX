@@ -1,5 +1,6 @@
 package com.example.fxgame;
 
+import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
 import javafx.application.Application;
@@ -16,6 +17,7 @@ public class RPGApplication extends Application {
     private final double v = 800;
     private final double v1 = 600;
     private Hero hero;
+    private Dungeon dungeon;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -65,6 +67,7 @@ public class RPGApplication extends Application {
         controller.setApp(this);
         controller.setHero(hero);
         controller.setLocation(location);
+        this.setDungeon(dungeon);
 
         Scene dungeonRoomScene = new Scene(dungeonRoom, v, v1);
         stage.setScene(dungeonRoomScene);
@@ -83,5 +86,11 @@ public class RPGApplication extends Application {
         this.hero = hero;
     }
 
+    public Dungeon getDungeon() {
+        return dungeon;
+    }
 
+    public void setDungeon(Dungeon dungeon) {
+        this.dungeon = dungeon;
+    }
 }
