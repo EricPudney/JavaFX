@@ -51,7 +51,7 @@
         <Button text="E" onAction="#goEast"/>
         <Button text="W" onAction="#goWest"/>
         <Button text="S" onAction="#goSouth"/>
-        <Button text="Map" />
+        <Button text="Map" onAction="#viewMap"/>
         <Button text="Inventory"/>
     </HBox>
     <HBox spacing="20">

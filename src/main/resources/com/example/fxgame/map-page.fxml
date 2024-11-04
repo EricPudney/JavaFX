@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.image.ImageView?>
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.fxgame.MapPage"
+      prefHeight="400.0" prefWidth="600.0">
+
+    <Label text="Dungeon Map" />
+
+        <GridPane fx:id="dungeonGrid" hgap="5" vgap="5" alignment="CENTER">
+            <!-- Cells will be added dynamically from the controller -->
+        </GridPane>
+        <Text>Key:</Text>
+        <GridPane hgap="5" vgap="5" alignment="CENTER">
+            <ImageView fx:id="xMark" GridPane.rowIndex="0" GridPane.columnIndex="0" fitHeight="12" fitWidth="12" />
+            <Label text="You are here!" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <ImageView fx:id="entrance" GridPane.rowIndex="1" GridPane.columnIndex="0" fitHeight="12" fitWidth="12"/>
+            <Label text="Dungeon entrance" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+        </GridPane>
+
+    <Text fx:id="msgtxt"></Text>
+
+</VBox>

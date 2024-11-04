@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 public class DungeonRoom {
@@ -68,6 +69,7 @@ public class DungeonRoom {
 
     public void setLocation(Location location) {
         this.location = location;
+        location.explored = true;
         getImageForLocation();
     }
 
@@ -109,6 +111,10 @@ public class DungeonRoom {
         messageText.setText("You go west...");
         int[] position = findCurrentLocation(dungeon);
         setLocation(dungeon.getLocations()[position[0]][position[1] - 1]);
+    }
+
+    public void viewMap() throws IOException {
+        app.viewMap(location, hero);
     }
 
     public int[] findCurrentLocation(Dungeon dungeon) {

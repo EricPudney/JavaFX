@@ -11,6 +11,8 @@ public class Location {
     public Inventory items;
     private final LocationType locationType;
     private final String imagePath;
+    private int xPosition;
+    private int yPosition;
     //String description;
     public boolean isStart;
     public boolean explored;
@@ -92,6 +94,22 @@ public class Location {
 
     public Monster getEnemy() {
         return enemy;
+    }
+
+    public int getxPosition() {
+        return xPosition;
+    }
+
+    public void setxPosition(int xPosition) {
+        this.xPosition = xPosition;
+    }
+
+    public int getyPosition() {
+        return yPosition;
+    }
+
+    public void setyPosition(int yPosition) {
+        this.yPosition = yPosition;
     }
 
     public String generateMonsterDescription() {

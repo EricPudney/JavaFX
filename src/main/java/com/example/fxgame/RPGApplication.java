@@ -74,6 +74,21 @@ public class RPGApplication extends Application {
         stage.show();
     }
 
+    public void viewMap(Location location, Hero hero) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("map-page.fxml"));
+        Parent mapPage = loader.load();
+        MapPage controller = loader.getController();
+        controller.setApp(this);
+        controller.setHero(hero);
+        controller.setLocation(location);
+        controller.setDungeon(dungeon);
+        controller.drawMap();
+
+        Scene mapPageScene = new Scene(mapPage, v, v1);
+        stage.setScene(mapPageScene);
+        stage.show();
+    }
+
     public static void main(String[] args) {
         launch();
     }
