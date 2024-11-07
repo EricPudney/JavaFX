@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.fxgame.ViewInventory"
+      prefHeight="400.0" prefWidth="600.0"
+      alignment="CENTER"
+>
+    <padding>
+        <Insets bottom="20.0" top="20.0"/>
+    </padding>
+    <GridPane fx:id="inventoryGrid" hgap="10" vgap="10" alignment="CENTER">
+        <!-- Cells will be added dynamically from the controller -->
+    </GridPane>
+    <HBox spacing="10" alignment="CENTER">
+        <padding>
+            <Insets bottom="20.0" top="20.0"/>
+        </padding>
+        <Button onAction="#dropItem">Drop</Button>
+        <Button onAction="#useItem">Use</Button>
+        <Button onAction="#equipItem">Equip</Button>
+        <Button onAction="#back">Back</Button>
+    </HBox>
+    <Text fx:id="msgtxt"></Text>
+
+</VBox>

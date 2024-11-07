@@ -3,6 +3,9 @@ package com.example.fxgame;
 import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
+import items.Inventory;
+import items.Item;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,11 +17,8 @@ import java.io.InputStream;
 public class DungeonRoom {
 
     private RPGApplication app;
-
     private Hero hero;
-
     private Location location;
-
     private Dungeon dungeon;
 
     @FXML
@@ -40,8 +40,9 @@ public class DungeonRoom {
     private Text messageText;
 
 
-    public void initialize() {
-
+    public void setApp(RPGApplication app) {
+        this.app = app;
+        this.dungeon = app.getDungeon();
     }
 
     private void getImageForLocation() {
@@ -73,47 +74,64 @@ public class DungeonRoom {
         getImageForLocation();
     }
 
-    public void goNorth() {
-        if (location.noWayNorth) {
-            messageText.setText("You can't go that way!");
-            return;
+    public boolean monsterCheck() {
+        if (location.getEnemy() != null && location.getEnemy().isAlive) {
+            messageText.setText(String.format("An enemy %s blocks your way!", location.getEnemy().name));
+            return true;
         }
-        messageText.setText("You go north...");
-        int[] position = findCurrentLocation(dungeon);
-        setLocation(dungeon.getLocations()[position[0] - 1][position[1]]);
+        return false;
+    }
+
+    public void goNorth() {
+        move(Direction.north);
     }
 
     public void goSouth() {
-        if (location.noWaySouth) {
-            messageText.setText("You can't go that way!");
-            return;
-        }
-        messageText.setText("You go south...");
-        int[] position = findCurrentLocation(dungeon);
-        setLocation(dungeon.getLocations()[position[0] + 1][position[1]]);
+        move(Direction.south);
     }
 
     public void goEast() {
-        if (location.noWayEast) {
-            messageText.setText("You can't go that way!");
-            return;
-        }
-        messageText.setText("You go east...");
-        int[] position = findCurrentLocation(dungeon);
-        setLocation(dungeon.getLocations()[position[0]][position[1] + 1]);
+        move(Direction.east);
     }
 
     public void goWest() {
-        if (location.noWayWest) {
-            messageText.setText("You can't go that way!");
+        move(Direction.west);
+    }
+
+    public void move(Direction direction) {
+        if (monsterCheck()) {
             return;
         }
-        messageText.setText("You go west...");
-        int[] position = findCurrentLocation(dungeon);
-        setLocation(dungeon.getLocations()[position[0]][position[1] - 1]);
+        if (location.noWayWest && direction == Direction.west ||
+                location.noWayEast && direction == Direction.east ||
+                location.noWayNorth && direction == Direction.north ||
+                location.noWaySouth && direction == Direction.south) {
+            messageText.setText("You can't go that way!");
+        } else {
+            messageText.setText("You go " + direction + "...");
+            int[] position = findCurrentLocation(dungeon);
+            switch (direction) {
+                case north:
+                    setLocation(dungeon.getLocations()[position[0] - 1][position[1]]);
+                    break;
+                case south:
+                    setLocation(dungeon.getLocations()[position[0] + 1][position[1]]);
+                    break;
+                case east:
+                    setLocation(dungeon.getLocations()[position[0]][position[1] + 1]);
+                    break;
+                case west:
+                    setLocation(dungeon.getLocations()[position[0]][position[1] - 1]);
+                    break;
+            }
+        }
     }
 
     public void viewMap() throws IOException {
+        if (monsterCheck()) {
+            messageText.setText("You can't check the map while facing an enemy!");
+            return;
+        }
         app.viewMap(location, hero);
     }
 
@@ -131,8 +149,50 @@ public class DungeonRoom {
         return position;
     }
 
-    public void setApp(RPGApplication app) {
-        this.app = app;
-        this.dungeon = app.getDungeon();
+    public void viewInventory(ActionEvent actionEvent) throws IOException {
+        app.viewInventory(hero.inventory, location);
+    }
+
+    public void takeItem(ActionEvent actionEvent) {
+        Inventory locationItems = location.items;
+        if (locationItems.isEmpty()) {
+            messageText.setText("There is nothing here to take!");
+            return;
+        }
+        if (locationItems.size() == 1) {
+            Item item = locationItems.removeFirst();
+            if (hero.inventory.addToInventory(item)) {
+                messageText.setText(String.format("You added the %s to your inventory.\n", item.name));
+                if (item.name.equals("Treasure")) {
+                    hero.foundTreasure = true;
+                }
+            }
+            else {
+                locationItems.add(item);
+            }
+        }
+//        else {
+//            Item item = locationItems.selectFromInventory("take");
+//            if (this.inventory.addToInventory(item)) {
+//                locationItems.remove(item);
+//                System.out.printf("You added the %s to your inventory.\n", item.name);
+//                if (item.name.equals("Treasure")) {
+//                    foundTreasure = true;
+//                }
+//            }
+//            else {
+//                locationItems.add(item);
+//            }
+        characterInfo.setText(hero.toString());
+        item.setText(location.generateItemText());
+    }
+
+
+
+
+
+
+    enum Direction {
+        north, south, east, west
     }
 }

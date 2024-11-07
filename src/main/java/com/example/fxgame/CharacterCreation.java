@@ -37,28 +37,24 @@ public class CharacterCreation {
         String characterName = name.getText();
         Character.Type chosenType = characterType.getValue();
         Character.Race chosenRace = characterRace.getValue();
-
-        // Validate selections
         if (characterName.isEmpty() || chosenType == null || chosenRace == null) {
-            showAlert("Error", "Please fill out all fields before submitting.");
+            showAlert("Error", "Please fill out all fields before submitting.", Alert.AlertType.ERROR);
             return;
         }
-
         Hero hero = createHero(characterName, chosenType, chosenRace);
         app.setHero(hero);
-        showAlert("Character created!", app.getHero().toString());
+        showAlert("Character created!", app.getHero().toString(), Alert.AlertType.INFORMATION);
         app.startDungeonRun(hero);
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+    private void showAlert(String title, String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
     }
 
-    // Adapted backend logic for hero creation
     private Hero createHero(String name, Character.Type type, Character.Race race) {
         int attack = 3;
         int health = 12;
@@ -67,8 +63,6 @@ public class CharacterCreation {
         double dodge = 0;
         double block = 0;
         double evasion = 0.45;
-
-        // Class-specific adjustments
         switch (type) {
             case warrior:
                 evasion -= 0.1;
@@ -89,8 +83,6 @@ public class CharacterCreation {
                 dodge += 0.25;
                 break;
         }
-
-        // Race-specific adjustments
         switch (race) {
             case human:
                 break;
@@ -107,7 +99,6 @@ public class CharacterCreation {
                 health += 2;
                 break;
         }
-
         return new Hero(attack, health, shield, initiative, dodge, block, evasion, type, race, name);
     }
 }

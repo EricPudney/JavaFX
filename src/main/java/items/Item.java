@@ -1,9 +1,12 @@
 package items;
 
+import java.util.Random;
+
 public class Item {
     public String name;
     public String description;
     public int value;
+    protected static Random rng = new Random();
 
     static String[][] itemList = {
             {"Necklace", "A simple gold necklace"},
@@ -13,7 +16,7 @@ public class Item {
             {"Ancient book", "A finely printed tome in full calf binding"}
     };
 
-    public Item(){
+    public Item() {
     }
 
     public Item(String name, String description, int value) {
@@ -36,17 +39,17 @@ public class Item {
         return new Item(name, description, 5);
     }
 
-//    public static Item generateMagicItem() {
-//        double rng = Math.random();
-//        if (rng <= 0.6) {
-//            return HealthBuffItem.generateHealthBuffItem();
-//        }
-//        else if (rng <= 0.9) {
-//            return AttackBuffItem.generateAttackBuffItem();
-//        }
-//        else {
-//            return EvasionBuffItem.generateEvasionBuffItem();
-//        }
-//    }
+    public static Item generateMagicItem() {
+        double rng = Math.random();
+        if (rng <= 0.6) {
+            return HealthBuffItem.generateHealthBuffItem();
+        }
+        else if (rng <= 0.9) {
+            return AttackBuffItem.generateAttackBuffItem();
+        }
+        else {
+            return EvasionBuffItem.generateEvasionBuffItem();
+        }
+    }
 }
 

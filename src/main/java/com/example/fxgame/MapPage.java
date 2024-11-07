@@ -53,12 +53,10 @@ public class MapPage {
     public void drawMap() {
         int rows = dungeon.getHeight();
         int cols = dungeon.getWidth();
-
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
                 Button cell = new Button();
                 cell.setPrefSize(65, 65);
-
                 Location location = dungeon.getLocation(row, col);
                 if (location.explored) {
                     cell.setStyle("-fx-background-color: darkgray;");
@@ -84,13 +82,12 @@ public class MapPage {
                 dungeonGrid.add(cell, col, row);
             }
         }
-
         xMark.setImage(loadImage("/images/x_mark.png"));
         entrance.setImage(loadImage("/images/entrance.png"));
     }
 
     private void handleCellClick(Location location) throws IOException {
-        if (dungeon.isAdjacent(location, this.location)) {
+        if (dungeon.isAdjacent(location, this.location) || (location == this.location)) {
             app.enterRoom(location, hero);
         }
         msgtxt.setText("You can't reach that location!");
@@ -118,5 +115,4 @@ public class MapPage {
             return null;
         }
     }
-
 }

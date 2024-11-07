@@ -13,23 +13,12 @@ public class Location {
     private final String imagePath;
     private int xPosition;
     private int yPosition;
-    //String description;
     public boolean isStart;
     public boolean explored;
     public boolean noWayNorth;
     public boolean noWaySouth;
     public boolean noWayEast;
     public boolean noWayWest;
-
-
-//    static String[] texts = {"You stand in a dim and murky room. Green stuff oozes from the decaying bricks in the wall. ",
-//    "By pale candlelight you make out the oblong shape of the dank and musty room. ",
-//    "You are in a large chamber, its splendour now entirely faded. Pale gunk drips from the ceiling. ",
-//    "You find yourself in a room that seems more like a cave and reeks of old cheese. ",
-//    "A pale red light suffuses this chamber, which is entirely devoid of furniture. ",
-//    "Ivy covers the walls of this room. ",
-//    "An eerie whistling in the air turns your blood cold. ",
-//    "The dungeon seems even darker and gloomier here, and somewhere in the distance you hear an eerie cackling. "};
 
     public Location(boolean noWaySouth, boolean noWayNorth, boolean noWayEast, boolean noWayWest) {
         this.items = new Inventory();
@@ -48,41 +37,16 @@ public class Location {
         this.imagePath = "/images/rooms/" + locationType + locIndex + ".png";
 
         double prob = rng.nextDouble();
-        if (prob < 0.01) {
+        if (prob < 0.08) {
             enemy = Monster.generateMonster();
         }
-        else if (prob > 0.01) {
-          items.add(Item.generateItem());
+        else if (prob > 0.99) {
+          items.add(Item.generateMagicItem());
         }
-
+        else if (prob > 0.95) {
+            items.add(Item.generateItem());
+        }
     }
-
-//    public String describeLocation() {
-//        String text = "";
-//        if (enemy != null && !enemy.isAlive) {
-//            text = String.format("There is a dead %s here.\n", enemy.name);
-//        }
-//        if (enemy != null && enemy.isAlive) {
-//            text = "You have encountered a monster! " + enemy + "\n";
-//            return description + text;
-//        }
-//        else if (!items.isEmpty()) {
-//            text = "You have found the following items: \n" + items + "\n";
-//        }
-//        if (noWaySouth) {
-//            text = text.concat("There is no way south from here.\n");
-//        }
-//        if (noWayNorth) {
-//            text = text.concat("There is no way north from here.\n");
-//        }
-//        if (noWayEast) {
-//            text = text.concat("There is no way east from here.\n");
-//        }
-//        if (noWayWest) {
-//            text = text.concat("There is no way west from here.\n");
-//        }
-//        return description + text;
-//    }
 
     public String getImagePath() {
         return imagePath;
@@ -114,7 +78,7 @@ public class Location {
 
     public String generateMonsterDescription() {
         if (enemy != null) {
-            return "In the " + locationType + " stands a " + enemy;
+            return "In the " + locationType + " stands a " + enemy + "!";
         }
         return "The area seems to be uninhabited.";
     }

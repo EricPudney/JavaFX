@@ -3,6 +3,7 @@ package com.example.fxgame;
 import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
+import items.Inventory;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -87,6 +88,21 @@ public class RPGApplication extends Application {
         Scene mapPageScene = new Scene(mapPage, v, v1);
         stage.setScene(mapPageScene);
         stage.show();
+    }
+
+    public void viewInventory(Inventory inventory, Location location) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view-inventory.fxml"));
+        Parent viewInventory = loader.load();
+        ViewInventory controller = loader.getController();
+        controller.setApp(this);
+        controller.setLocation(location);
+        controller.setInventory(inventory);
+        controller.renderInventory(inventory);
+
+        Scene viewInventoryScene = new Scene(viewInventory, v, v1);
+        stage.setScene(viewInventoryScene);
+        stage.show();
+
     }
 
     public static void main(String[] args) {

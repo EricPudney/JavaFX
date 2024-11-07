@@ -52,14 +52,14 @@
         <Button text="W" onAction="#goWest"/>
         <Button text="S" onAction="#goSouth"/>
         <Button text="Map" onAction="#viewMap"/>
-        <Button text="Inventory"/>
+        <Button text="Inventory" onAction="#viewInventory"/>
     </HBox>
     <HBox spacing="20">
         <padding>
             <Insets top="20" right="20" bottom="20" left="20"/>
         </padding>
 
-        <Button text="Take item"/>
+        <Button text="Take item" onAction="#takeItem"/>
         <Button text="Attack"/>
         <Button text="Evade"/>
         <Text fx:id="messageText"></Text>
