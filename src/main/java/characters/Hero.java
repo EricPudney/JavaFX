@@ -36,8 +36,22 @@ public class Hero extends Character {
     public void addXp(int xp) {
         this.xp += xp;
         if (this.xp / 20 >= level) {
-            //this.levelUp();
+            this.levelUp();
         }
+    }
+
+    public void levelUp() {
+        this.level += 1;
+        this.maxHealth += 1;
+        this.health += 1;
+        if (this.level % 5 == 0) {
+            this.attack += 1;
+            this.evasion += 0.05;
+            this.block += 0.05;
+            this.dodge += 0.05;
+        }
+        // replace with alert?
+        System.out.printf("%s levelled up and is now level %d!\n", this.name, this.level);
     }
 
     @Override
