@@ -53,27 +53,25 @@ public class DungeonRun {
                 cell.setPrefSize(65, 65);
 
                 Location location = dungeon.getLocation(row, col);
-                if (location.explored) {
-                    cell.setStyle("-fx-background-color: darkgray;");
-                }
-                else {
-                    cell.setStyle("-fx-background-color: lightgray;");
-                }
+                cell.setStyle("-fx-background-color: lightgray;");
 
-                ImageView imageView = getImageForLocation(location);
-
-                if (imageView != null) {
-                    cell.setGraphic(imageView);
-                }
-
-                cell.setOnAction(e -> {
-                    try {
-                        handleCellClick(location);
-                    } catch (IOException ex) {
-                        throw new RuntimeException(ex);
+                if (location.isStart) {
+                    InputStream imageStream = getClass().getResourceAsStream("/images/entrance.png");
+                    if (imageStream != null) {
+                        Image entranceImage = new Image(imageStream);
+                        ImageView imageView = new ImageView(entranceImage);
+                        cell.setGraphic(imageView);
+                    } else {
+                        throw new RuntimeException();
                     }
-                });
-
+                    cell.setOnAction(e -> {
+                        try {
+                            handleCellClick(location);
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                    });
+                }
                 dungeonGrid.add(cell, col, row);
             }
         }
@@ -81,33 +79,9 @@ public class DungeonRun {
         height.setText("height: " + rows);
     }
 
-
-    private ImageView getImageForLocation(Location location) {
-        ImageView image = null;
-        if (location.isStart) {
-            Image entranceImage = loadImage("/images/entrance.png");
-            if (entranceImage != null) {
-                image = new ImageView(entranceImage);
-            }
-        }
-        return image;
-    }
-
-    private Image loadImage(String path) {
-        InputStream imageStream = getClass().getResourceAsStream(path);
-        if (imageStream != null) {
-            return new Image(imageStream);
-        } else {
-            System.err.println("Image not found: " + path);
-            return null;
-        }
-    }
-
     private void handleCellClick(Location location) throws IOException {
-        if (location.isStart) {
-            app.setDungeon(dungeon);
-            app.enterRoom(location, hero);
-        }
+        app.setDungeon(dungeon);
+        app.enterRoom(location, hero);
     }
 
     public void setHero(Hero hero) {
