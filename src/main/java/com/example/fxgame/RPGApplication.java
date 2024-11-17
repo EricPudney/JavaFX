@@ -12,7 +12,6 @@ import java.io.IOException;
 public class RPGApplication extends Application {
 
     private SceneManager sceneManager;
-    private Stage stage;
     private final double v = 800;
     private final double v1 = 600;
     private Hero hero;
