@@ -88,7 +88,7 @@ public class MapPage implements AppAwareController, HeroAwareController, Dungeon
 
     private void handleCellClick(Location location) throws IOException {
         if (dungeon.isAdjacent(location, this.location) || (location == this.location)) {
-            app.enterRoom(location, hero);
+            app.enterRoom(location);
         }
         msgtxt.setText("You can't reach that location!");
     }

@@ -44,7 +44,7 @@ public class CharacterCreation implements AppAwareController {
         Hero hero = createHero(characterName, chosenType, chosenRace);
         app.setHero(hero);
         showAlert("Character created!", app.getHero().toString(), Alert.AlertType.INFORMATION);
-        app.startDungeonRun(hero);
+        app.startDungeonRun();
     }
 
     private void showAlert(String title, String message, Alert.AlertType type) {

@@ -149,6 +149,6 @@ public class ViewInventory implements AppAwareController{
     }
 
     public void back(ActionEvent actionEvent) throws IOException {
-        app.enterRoom(location, app.getHero());
+        app.enterRoom(location);
     }
 }

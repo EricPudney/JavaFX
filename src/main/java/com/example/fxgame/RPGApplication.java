@@ -33,18 +33,18 @@ public class RPGApplication extends Application {
         sceneManager.switchScene("character-creation.fxml", v, v1, null);
     }
 
-    public void startDungeonRun(Hero hero) throws IOException {
+    public void startDungeonRun() throws IOException {
         sceneManager.switchScene("dungeon-run.fxml", v, v1, null);
     }
 
-    public void enterRoom(Location location, Hero hero) throws IOException {
+    public void enterRoom(Location location) throws IOException {
         sceneManager.switchScene("dungeon-room.fxml", v, v1, controller -> {
             DungeonRoom dungeonRoom = (DungeonRoom) controller;
             dungeonRoom.setLocation(location);
         });
     }
 
-    public void viewMap(Location location, Hero hero) throws IOException {
+    public void viewMap(Location location) throws IOException {
         sceneManager.switchScene("map-page.fxml", v, v1, controller -> {
             MapPage mapPage = (MapPage) controller;
             mapPage.setLocation(location);

@@ -132,7 +132,7 @@ public class DungeonRoom implements AppAwareController, HeroAwareController {
             messageText.setText("You can't check the map while facing an enemy!");
             return;
         }
-        app.viewMap(location, hero);
+        app.viewMap(location);
     }
 
     public int[] findCurrentLocation(Dungeon dungeon) {

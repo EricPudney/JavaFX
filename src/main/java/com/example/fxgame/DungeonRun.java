@@ -81,7 +81,7 @@ public class DungeonRun implements AppAwareController, HeroAwareController {
 
     private void handleCellClick(Location location) throws IOException {
         app.setDungeon(dungeon);
-        app.enterRoom(location, hero);
+        app.enterRoom(location);
     }
 
     public void setHero(Hero hero) {
