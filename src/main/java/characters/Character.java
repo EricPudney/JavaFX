@@ -14,7 +14,6 @@ public abstract class Character {
     public double block;
     public String name;
     public boolean isAlive = true;
-    public Location currentLocation;
     private Random rng = new Random();
 
     public String attack(Character target) {
