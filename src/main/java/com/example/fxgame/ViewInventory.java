@@ -16,7 +16,7 @@ import javafx.scene.text.Text;
 
 import java.io.IOException;
 
-public class ViewInventory {
+public class ViewInventory implements AppAwareController{
     @FXML
     private GridPane inventoryGrid;
 

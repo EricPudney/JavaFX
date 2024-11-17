@@ -61,7 +61,7 @@
 
         <Button text="Take item" onAction="#takeItem"/>
         <Button text="Attack"/>
-        <Button text="Evade"/>
+        <Button text="Evade" onAction="#evade"/>
         <Text fx:id="messageText"></Text>
     </HBox>
 </VBox>

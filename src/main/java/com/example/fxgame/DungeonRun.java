@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
 
-public class DungeonRun {
+public class DungeonRun implements AppAwareController, HeroAwareController {
     private RPGApplication app;
 
     private Hero hero;

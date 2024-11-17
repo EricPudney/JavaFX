@@ -14,7 +14,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class DungeonRoom {
+public class DungeonRoom implements AppAwareController, HeroAwareController {
 
     private RPGApplication app;
     private Hero hero;
@@ -187,9 +187,18 @@ public class DungeonRoom {
         item.setText(location.generateItemText());
     }
 
-
-
-
+    public void evade(ActionEvent actionEvent) {
+        double rng = Math.random();
+        if (hero.evasion > rng) {
+            location.setEnemyToNull();
+            hero.addXp(2);
+            messageText.setText("You have successfully evaded the monster.");
+        }
+        else {
+            messageText.setText(String.format("You failed to evade the %s!\n", location.getEnemy().name));
+            messageText.setText(messageText.getText() + location.getEnemy().attack(hero));
+        }
+    }
 
 
     enum Direction {

@@ -37,7 +37,7 @@ public class Location {
         this.imagePath = "/images/rooms/" + locationType + locIndex + ".png";
 
         double prob = rng.nextDouble();
-        if (prob < 0.08) {
+        if (prob < 0.88) {
             enemy = Monster.generateMonster();
         }
         else if (prob > 0.99) {
@@ -88,6 +88,10 @@ public class Location {
             return "You see nothing else of interest here.";
         }
         return "You have found the following item(s): \n" + items;
+    }
+
+    public void setEnemyToNull() {
+        this.enemy = null;
     }
 
     enum LocationType {

@@ -13,7 +13,7 @@ import javafx.scene.text.Text;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class MapPage {
+public class MapPage implements AppAwareController, HeroAwareController, DungeonAwareController{
     private RPGApplication app;
 
     private Hero hero;

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 
 import java.io.IOException;
 
-public class RPGController {
+public class RPGController implements AppAwareController {
 
     private RPGApplication app;
 
