@@ -60,6 +60,10 @@ public class RPGApplication extends Application {
         });
     }
 
+    public void endGame() throws IOException {
+        sceneManager.switchScene("endgame.fxml", v, v1, null);
+    }
+
     public static void main(String[] args) {
         launch();
     }

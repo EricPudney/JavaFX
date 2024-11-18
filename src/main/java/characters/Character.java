@@ -1,7 +1,5 @@
 package characters;
 
-import areas.Location;
-
 import java.util.Random;
 
 public abstract class Character {
@@ -14,7 +12,7 @@ public abstract class Character {
     public double block;
     public String name;
     public boolean isAlive = true;
-    private Random rng = new Random();
+    private final Random rng = new Random();
 
     public String attack(Character target) {
         String returnString = "";

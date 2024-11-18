@@ -6,6 +6,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.Font?>
+<?import com.example.fxgame.ScrollableTextArea?>
 <VBox xmlns="http://javafx.com/javafx"
       xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.fxgame.DungeonRoom"
@@ -60,8 +61,8 @@
         </padding>
 
         <Button text="Take item" onAction="#takeItem"/>
-        <Button text="Attack"/>
+        <Button text="Attack" onAction="#attack"/>
         <Button text="Evade" onAction="#evade"/>
-        <Text fx:id="messageText"></Text>
+        <ScrollableTextArea fx:id="messageText"></ScrollableTextArea>
     </HBox>
 </VBox>

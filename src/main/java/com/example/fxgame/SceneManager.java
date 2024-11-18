@@ -31,6 +31,10 @@ public class SceneManager {
             ((DungeonAwareController) controller).setDungeon(app.getDungeon());
         }
 
+        if (controller instanceof TextAreaAwareController) {
+            ((TextAreaAwareController) controller).setTextArea();
+        }
+
         // Allow customization of the controller setup
         if (controllerSetup != null) {
             controllerSetup.accept(controller);
