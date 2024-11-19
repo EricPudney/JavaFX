@@ -77,8 +77,11 @@ public class Location {
     }
 
     public String generateMonsterDescription() {
-        if (enemy != null) {
+        if (enemy != null && enemy.isAlive) {
             return "In the " + locationType + " stands a " + enemy + "!";
+        }
+        else if (enemy != null) {
+            return "There is a dead " + enemy.name + " here.";
         }
         return "The area seems to be uninhabited.";
     }

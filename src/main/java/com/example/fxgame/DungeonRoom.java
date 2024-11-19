@@ -203,18 +203,27 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         Monster enemy = location.getEnemy();
         if (enemy == null) {
             messageText.appendText("There is nothing to attack!");
-            return;
         }
         else {
+            generateText();
             if (enemy.initiative > hero.initiative) {
                 messageText.appendText(String.format("The %s is too fast for you, and attacks!\n" , enemy.name) + enemy.attack(hero));
                 if (!hero.isAlive) {
                     app.endGame();
                 }
+                messageText.appendText(String.format("%s attacks the %s!\n", hero.name, enemy.name) + hero.attack(enemy));
+                generateText();
             }
-
+            else {
+                messageText.appendText(String.format("%s attacks the %s!\n", hero.name, enemy.name) + hero.attack(enemy));
+                if (!enemy.isAlive) {
+                    generateText();
+                    return;
+                }
+                messageText.appendText(String.format("The %s attacks back!\n" , enemy.name) + enemy.attack(hero));
+                generateText();
+            }
         }
-
     }
 
     public void setTextArea() {
