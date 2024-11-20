@@ -4,8 +4,10 @@ import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
 import items.Inventory;
+import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 
@@ -60,8 +62,16 @@ public class RPGApplication extends Application {
         });
     }
 
-    public void endGame() throws IOException {
-        sceneManager.switchScene("endgame.fxml", v, v1, null);
+    public void endGame() {
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> {
+            try {
+                sceneManager.switchScene("endgame.fxml", v, v1, null);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        pause.play();
     }
 
     public static void main(String[] args) {
