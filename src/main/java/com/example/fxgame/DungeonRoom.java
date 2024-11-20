@@ -157,6 +157,7 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
                 messageText.appendText(String.format("You added the %s to your inventory.\n", item.name));
                 if (item.name.equals("Treasure")) {
                     hero.foundTreasure = true;
+                    messageText.appendText("You found the treasure! Return to the entrance to leave this dungeon.");
                 }
             }
             else {
@@ -178,7 +179,7 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         generateText();
     }
 
-    public void evade(ActionEvent actionEvent) throws IOException {
+    public void evade(ActionEvent actionEvent) {
         if (location.getEnemy() == null) {
             messageText.appendText("There is nothing to evade!");
             return;
@@ -199,7 +200,7 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         }
     }
 
-    public void attack(ActionEvent actionEvent) throws IOException {
+    public void attack(ActionEvent actionEvent) {
         Monster enemy = location.getEnemy();
         if (enemy == null) {
             messageText.appendText("There is nothing to attack!");

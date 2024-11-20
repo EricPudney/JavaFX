@@ -19,7 +19,6 @@ public class ScrollableTextArea extends VBox {
 
     public void appendText(String text) {
 
-        System.out.println("Current Text: " + textArea.getText());
         Platform.runLater(() -> {
             String[] lines = textArea.getText().split("\n");
             if (lines.length >= maxLines) {
