@@ -74,23 +74,23 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         return false;
     }
 
-    public void goNorth() {
+    public void goNorth() throws IOException {
         move(Direction.north);
     }
 
-    public void goSouth() {
+    public void goSouth() throws IOException {
         move(Direction.south);
     }
 
-    public void goEast() {
+    public void goEast() throws IOException {
         move(Direction.east);
     }
 
-    public void goWest() {
+    public void goWest() throws IOException {
         move(Direction.west);
     }
 
-    public void move(Direction direction) {
+    public void move(Direction direction) throws IOException {
         if (monsterCheck()) {
             return;
         }
@@ -242,9 +242,12 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         this.hero = hero;
     }
 
-    public void setLocation(Location location) {
+    public void setLocation(Location location) throws IOException {
         this.location = location;
         location.explored = true;
+        if (this.location.isStart && hero.foundTreasure) {
+            app.exitDungeon();
+        }
         getImageForLocation();
     }
 

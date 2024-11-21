@@ -1,6 +1,7 @@
 package com.example.fxgame;
 
 import characters.Character;
+import utils.Alerts;
 import characters.Hero;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -38,21 +39,13 @@ public class CharacterCreation implements AppAwareController {
         Character.Type chosenType = characterType.getValue();
         Character.Race chosenRace = characterRace.getValue();
         if (characterName.isEmpty() || chosenType == null || chosenRace == null) {
-            showAlert("Error", "Please fill out all fields before submitting.", Alert.AlertType.ERROR);
+            Alerts.showAlert("Error", "Please fill out all fields before submitting.", Alert.AlertType.ERROR);
             return;
         }
         Hero hero = createHero(characterName, chosenType, chosenRace);
         app.setHero(hero);
-        showAlert("Character created!", app.getHero().toString(), Alert.AlertType.INFORMATION);
+        Alerts.showAlert("Character created!", app.getHero().toString(), Alert.AlertType.INFORMATION);
         app.startDungeonRun();
-    }
-
-    private void showAlert(String title, String message, Alert.AlertType type) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 
     private Hero createHero(String name, Character.Type type, Character.Race race) {

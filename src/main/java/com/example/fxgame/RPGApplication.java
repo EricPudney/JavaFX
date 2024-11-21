@@ -6,8 +6,10 @@ import characters.Hero;
 import items.Inventory;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.Alerts;
 
 import java.io.IOException;
 
@@ -41,7 +43,11 @@ public class RPGApplication extends Application {
     public void enterRoom(Location location) throws IOException {
         sceneManager.switchScene("dungeon-room.fxml", v, v1, controller -> {
             DungeonRoom dungeonRoom = (DungeonRoom) controller;
-            dungeonRoom.setLocation(location);
+            try {
+                dungeonRoom.setLocation(location);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
@@ -74,6 +80,11 @@ public class RPGApplication extends Application {
         pause.play();
     }
 
+    public void exitDungeon() throws IOException {
+        Alerts.showAlert("Dungeon run complete!", "You made it! You head to town to resupply before your next adventure.", Alert.AlertType.INFORMATION);
+        sceneManager.switchScene("shop.fxml", v, v1, null);
+    }
+
     public static void main(String[] args) {
         launch();
     }
@@ -93,4 +104,6 @@ public class RPGApplication extends Application {
     public void setDungeon(Dungeon dungeon) {
         this.dungeon = dungeon;
     }
+
+
 }
