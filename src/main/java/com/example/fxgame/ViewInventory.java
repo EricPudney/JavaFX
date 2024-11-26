@@ -2,23 +2,28 @@ package com.example.fxgame;
 
 import areas.Location;
 import characters.Hero;
+import com.example.fxgame.components.InventoryView;
+import com.example.fxgame.components.ItemActions;
 import items.Equippable;
 import items.Inventory;
 import items.Item;
 import items.Usable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ViewInventory implements AppAwareController{
+public class ViewInventory implements AppAwareController, InventoryView.ItemHolder {
     @FXML
     private GridPane inventoryGrid;
+
+    @FXML
+    private HBox buttonBox;
 
     @FXML
     private Text msgtxt;
@@ -31,6 +36,8 @@ public class ViewInventory implements AppAwareController{
 
     private Location location;
 
+    private InventoryView view = new InventoryView();
+
     public void setInventory(Inventory inventory) {
         this.inventory = inventory;
     }
@@ -41,53 +48,12 @@ public class ViewInventory implements AppAwareController{
 
 
     public void renderInventory(Inventory inventory) {
-        inventoryGrid.getChildren().clear();
-
-        // Create a ToggleGroup for the radio buttons
-        ToggleGroup toggleGroup = new ToggleGroup();
-
-        // Create header labels for the table
-        Label headerNo = new Label("No");
-        Label headerItem = new Label("Item");
-        Label headerDescription = new Label("Description");
-        Label headerPrice = new Label("Price");
-        Label headerSelect = new Label("Select");
-
-        // Add headers to the first row
-        inventoryGrid.add(headerNo, 0, 0);
-        inventoryGrid.add(headerItem, 1, 0);
-        inventoryGrid.add(headerDescription, 2, 0);
-        inventoryGrid.add(headerPrice, 3, 0);
-        inventoryGrid.add(headerSelect, 4, 0);
-
-        int i = 1;
-        for (Item item : inventory) {
-            Label no = new Label(String.valueOf(i));
-
-            Label itemLabel = new Label(item.name);
-
-            Label description = new Label(item.description);
-            Label price = new Label(String.valueOf(item.value));
-
-            // Create a radio button for selection and add it to the toggle group
-            RadioButton selectButton = new RadioButton();
-            selectButton.setToggleGroup(toggleGroup);
-
-            // Add an event listener to update selectedItem when this button is selected
-            selectButton.selectedProperty().addListener((observable, oldValue, isSelected) -> {
-                if (isSelected) {
-                    selectedItem = item;
-                }
-            });
-
-            // Add the components to the grid in the current row
-            inventoryGrid.add(no, 0, i);
-            inventoryGrid.add(itemLabel, 1, i);
-            inventoryGrid.add(description, 2, i);
-            inventoryGrid.add(price, 3, i);
-            inventoryGrid.add(selectButton, 4, i);
-            i++;
-        }
+        List<ItemActions> actions = new ArrayList<>();
+        actions.add(ItemActions.DROP);
+        actions.add(ItemActions.USE);
+        actions.add(ItemActions.EQUIP);
+        actions.add(ItemActions.BACK);
+        view.renderInventory(inventoryGrid, buttonBox, inventory, this, actions);
     }
 
     public boolean selectedItemCheck() {
@@ -150,5 +116,19 @@ public class ViewInventory implements AppAwareController{
 
     public void back(ActionEvent actionEvent) throws IOException {
         app.enterRoom(location);
+    }
+
+    @Override
+    public void setSelectedItem(Item item) {
+        this.selectedItem = item;
+    }
+
+    @Override
+    public Item getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void sellItem(ActionEvent actionEvent) {
+        msgtxt.setText("Item sold!");
     }
 }

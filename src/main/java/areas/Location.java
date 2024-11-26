@@ -37,13 +37,13 @@ public class Location {
         this.imagePath = "/images/rooms/" + locationType + locIndex + ".png";
 
         double prob = rng.nextDouble();
-        if (prob < 0.88) {
+        if (prob < 0.08) {
             enemy = Monster.generateMonster();
         }
-        else if (prob > 0.99) {
+        else if (prob > 0.90) {
           items.add(Item.generateMagicItem());
         }
-        else if (prob > 0.95) {
+        else if (prob > 0.25) {
             items.add(Item.generateItem());
         }
     }

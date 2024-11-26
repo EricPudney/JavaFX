@@ -13,6 +13,9 @@ import utils.Alerts;
 
 import java.io.IOException;
 
+// This controller does not need to exist - the viewinventory logic should be worked into the dungeonroom controller.
+
+
 public class RPGApplication extends Application {
 
     private SceneManager sceneManager;
