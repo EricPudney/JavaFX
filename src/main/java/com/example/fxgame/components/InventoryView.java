@@ -4,15 +4,11 @@ import items.Inventory;
 import items.Item;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 public class InventoryView {
 
