@@ -38,9 +38,19 @@
             <padding>
                 <Insets top="50" />
             </padding>
-            <Text fx:id="characterInfo" wrappingWidth="180"></Text>
+            <Text fx:id="characterInfo" wrappingWidth="180"/>
         </VBox>
+    </HBox>
 
+    <GridPane fx:id="inventoryGrid" hgap="10" vgap="10" alignment="CENTER"/>
+    <HBox fx:id="buttonBox" alignment="CENTER" spacing="20">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+        <Button onAction="#dropItem" managed="false">Drop</Button>
+        <Button onAction="#useItem" managed="false">Use</Button>
+        <Button onAction="#equipItem" managed="false">Equip</Button>
+        <Button onAction="#back" managed="false">Back</Button>
     </HBox>
 
     <HBox spacing="20">
@@ -63,6 +73,6 @@
         <Button text="Take item" onAction="#takeItem"/>
         <Button text="Attack" onAction="#attack"/>
         <Button text="Evade" onAction="#evade"/>
-        <ScrollableTextArea fx:id="messageText"></ScrollableTextArea>
+        <ScrollableTextArea fx:id="messageText"/>
     </HBox>
 </VBox>

@@ -56,6 +56,6 @@ public class Hero extends Character {
 
     @Override
     public String toString() {
-        return "You are " + this.name + " the brave " + this.race + " " + this.type + "!\n" + "Attack: " + this.attack + "; Health: " + this.health + "\nYou have " + this.gold + " gold coins.\nYou are level " + this.level + " and have " + this.xp + " experience points.\n You have the following items equipped: \n" + equippedItems + "\nYou are also carrying: \n" + inventory.toString();
+        return "You are " + this.name + " the brave " + this.race + " " + this.type + "!\n" + "Attack: " + this.attack + "; Health: " + this.health + "\nYou have " + this.gold + " gold coins.\nYou are level " + this.level + " and have " + this.xp + " experience points.\n";
     }
 }

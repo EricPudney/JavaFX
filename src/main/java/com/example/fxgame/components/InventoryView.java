@@ -4,18 +4,21 @@ import items.Inventory;
 import items.Item;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import java.util.List;
+
 public class InventoryView {
 
     public void renderInventory(GridPane inventoryGrid, HBox buttonBox, Inventory inventory, ItemHolder selectedItemHolder, List<ItemActions> actions
     ) {
         inventoryGrid.getChildren().clear();
-
+        System.out.println("Got to here.");
         ToggleGroup toggleGroup = new ToggleGroup();
 
         // Create headers
@@ -58,27 +61,9 @@ public class InventoryView {
         }
     }
 
-//    public static class ButtonConfig {
-//        private final String label;
-//        private final Consumer<Item> action;
-//
-//        public ButtonConfig(String label, Consumer<Item> action) {
-//            this.label = label;
-//            this.action = action;
-//        }
-//
-//        public String getLabel() {
-//            return label;
-//        }
-//
-//        public Consumer<Item> getAction() {
-//            return action;
-//        }
-//    }
 
     public interface ItemHolder {
         void setSelectedItem(Item item);
 
-        Item getSelectedItem();
     }
 }

@@ -3,7 +3,6 @@ package com.example.fxgame;
 import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
-import items.Inventory;
 import javafx.animation.PauseTransition;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
@@ -12,8 +11,6 @@ import javafx.util.Duration;
 import utils.Alerts;
 
 import java.io.IOException;
-
-// This controller does not need to exist - the viewinventory logic should be worked into the dungeonroom controller.
 
 
 public class RPGApplication extends Application {
@@ -59,15 +56,6 @@ public class RPGApplication extends Application {
             MapPage mapPage = (MapPage) controller;
             mapPage.setLocation(location);
             mapPage.drawMap();
-        });
-    }
-
-    public void viewInventory(Inventory inventory, Location location) throws IOException {
-        sceneManager.switchScene("view-inventory.fxml", v, v1, controller -> {
-            ViewInventory viewInventory = (ViewInventory) controller;
-            viewInventory.setInventory(inventory);
-            viewInventory.setLocation(location);
-            viewInventory.renderInventory(inventory);
         });
     }
 

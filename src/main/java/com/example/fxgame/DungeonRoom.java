@@ -4,25 +4,39 @@ import areas.Dungeon;
 import areas.Location;
 import characters.Hero;
 import characters.Monster;
+import com.example.fxgame.components.InventoryView;
+import com.example.fxgame.components.ItemActions;
+import items.Equippable;
 import items.Inventory;
 import items.Item;
+import items.Usable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
-public class DungeonRoom implements AppAwareController, HeroAwareController, TextAreaAwareController {
+public class DungeonRoom implements AppAwareController, HeroAwareController, InventoryView.ItemHolder {
 
     private RPGApplication app;
     private Hero hero;
     private Location location;
     private Dungeon dungeon;
+    private final InventoryView inventoryView = new InventoryView();
+    private Item selectedItem;
 
+    @FXML
+    private GridPane inventoryGrid;
 
+    @FXML
+    private HBox buttonBox;
 
     @FXML
     private ImageView image;
@@ -141,8 +155,13 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         return position;
     }
 
-    public void viewInventory(ActionEvent actionEvent) throws IOException {
-        app.viewInventory(hero.inventory, location);
+    public void viewInventory() {
+        List<ItemActions> actions = new ArrayList<>();
+        actions.add(ItemActions.DROP);
+        actions.add(ItemActions.USE);
+        actions.add(ItemActions.EQUIP);
+        actions.add(ItemActions.BACK);
+        inventoryView.renderInventory(inventoryGrid, buttonBox, hero.inventory, this, actions);
     }
 
     public void takeItem(ActionEvent actionEvent) {
@@ -227,6 +246,60 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         }
     }
 
+    public boolean selectedItemCheck() {
+        if (selectedItem == null) {
+            messageText.appendText("No item selected");
+            return false;
+        }
+        return true;
+    }
+
+    public void dropItem() {
+        if (selectedItemCheck()) {
+            hero.inventory.remove(selectedItem);
+            location.items.add(selectedItem);
+        }
+        viewInventory();
+    }
+
+    public void useItem() {
+        if (selectedItemCheck()) {
+            if (!(selectedItem instanceof Usable)) {
+                messageText.appendText("That item cannot be used!");
+                return;
+            }
+            if (((Usable) selectedItem).useItem(app.getHero())) {
+                hero.inventory.remove(selectedItem);
+                messageText.appendText("You used the " + selectedItem.name);
+            }
+            viewInventory();
+        }
+    }
+
+    public void equipItem() {
+        if (selectedItemCheck()) {
+            Hero player = app.getHero();
+            if (!(selectedItem instanceof Equippable)) {
+                messageText.appendText("That item cannot be equipped!");
+            }
+            else if (player.equippedItems.size() >= 5) {
+                messageText.appendText("You cannot equip any more items!");
+            }
+            else {
+                for (Equippable item : player.equippedItems) {
+                    if (item.getClass() == selectedItem.getClass()) {
+                        messageText.appendText(String.format("You have already equipped a %s!\n", item.getClass().getSimpleName().toLowerCase()));
+                        return;
+                    }
+                }
+                hero.inventory.remove(selectedItem);
+                player.equippedItems.add((Equippable) selectedItem);
+                ((Equippable) selectedItem).equip(player);
+            }
+        }
+        viewInventory();
+    }
+
     public void setTextArea() {
         if (messageText == null) {
             this.messageText = new ScrollableTextArea();
@@ -251,6 +324,14 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Tex
         getImageForLocation();
     }
 
+    @Override
+    public void setSelectedItem(Item item) {
+        this.selectedItem = item;
+    }
+
+    public void back(ActionEvent actionEvent) throws IOException {
+        app.enterRoom(location);
+    }
 
 
     enum Direction {
