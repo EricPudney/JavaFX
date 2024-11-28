@@ -12,6 +12,7 @@ import items.Item;
 import items.Usable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
@@ -31,6 +32,9 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
     private Dungeon dungeon;
     private final InventoryView inventoryView = new InventoryView();
     private Item selectedItem;
+
+    @FXML
+    private HBox actionButtons;
 
     @FXML
     private GridPane inventoryGrid;
@@ -156,6 +160,10 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
     }
 
     public void viewInventory() {
+        inventoryGrid.setManaged(true);
+        buttonBox.setManaged(true);
+        actionButtons.setManaged(false);
+        actionButtons.setVisible(false);
         List<ItemActions> actions = new ArrayList<>();
         actions.add(ItemActions.DROP);
         actions.add(ItemActions.USE);
@@ -258,8 +266,10 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
         if (selectedItemCheck()) {
             hero.inventory.remove(selectedItem);
             location.items.add(selectedItem);
+            messageText.appendText("You dropped the " + selectedItem.name);
         }
         viewInventory();
+        generateText();
     }
 
     public void useItem() {
@@ -273,6 +283,7 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
                 messageText.appendText("You used the " + selectedItem.name);
             }
             viewInventory();
+            generateText();
         }
     }
 
@@ -298,6 +309,22 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
             }
         }
         viewInventory();
+        generateText();
+    }
+
+    // seems clunky but it works
+    public void back(ActionEvent actionEvent) {
+        inventoryGrid.setManaged(false);
+        buttonBox.setManaged(false);
+        inventoryGrid.setVisible(false);
+        buttonBox.setVisible(false);
+        actionButtons.setManaged(true);
+        actionButtons.setVisible(true);
+        for (Node child : actionButtons.getChildren()) {
+            child.setVisible(true);
+            child.setManaged(true);
+        }
+        generateText();
     }
 
     public void setTextArea() {
@@ -327,10 +354,6 @@ public class DungeonRoom implements AppAwareController, HeroAwareController, Inv
     @Override
     public void setSelectedItem(Item item) {
         this.selectedItem = item;
-    }
-
-    public void back(ActionEvent actionEvent) throws IOException {
-        app.enterRoom(location);
     }
 
 

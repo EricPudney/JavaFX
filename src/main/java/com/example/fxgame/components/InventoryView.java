@@ -18,7 +18,6 @@ public class InventoryView {
     public void renderInventory(GridPane inventoryGrid, HBox buttonBox, Inventory inventory, ItemHolder selectedItemHolder, List<ItemActions> actions
     ) {
         inventoryGrid.getChildren().clear();
-        System.out.println("Got to here.");
         ToggleGroup toggleGroup = new ToggleGroup();
 
         // Create headers
